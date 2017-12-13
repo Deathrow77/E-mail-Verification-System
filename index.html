@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>E-mail Verification Applet (using Redis)</title>
+  <script src = 'https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+  <body>
+    <div class="container">
+      <h1>E-mail Verification Applet (using Redis) in Node.js</h1>
+      <input type="text" id="to" placeholder="Enter your email address"><br>
+      <button id="send-email">Send Email</button>
+      <span id="message"></span>
+    </div>
+    <script>
+      var from, to, subject, text;
+      $('#send-email').on('click', function(){
+        to = $('#to').val();
+        $('#message').text('Sending Email.. Please Wait');
+        $.post('/send',{ to:to }, function(response){
+          if(response.error){
+            $('#message').empty().html("Error Sending Message<br>" + response.data);
+          }
+          else{
+            $('#message').empty().html("<p>Email Has been sent to " + to + "<br>Please Check Your Inbox.</p>");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
